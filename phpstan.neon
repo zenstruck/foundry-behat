@@ -1,0 +1,33 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+    level: 8
+
+    treatPhpDocTypesAsCertain: false
+    inferPrivatePropertyTypeFromConstructor: true
+    checkUninitializedProperties: true
+    checkMissingCallableSignature: true
+
+    paths:
+        - ./config
+        - ./src
+        - ./tests
+
+    banned_code:
+        non_ignorable: false
+
+    bootstrapFiles:
+        - ./vendor/autoload.php
+
+    ignoreErrors:
+        # prevent PHPStan to force to type data providers
+        - identifier: missingType.iterableValue
+          path: tests/
+
+        # not relevant for files outside from Foundry's namespace
+        - identifier: classConstant.internalClass
+          path: config/
+
+    excludePaths:
+        - config/reference.php (?)
